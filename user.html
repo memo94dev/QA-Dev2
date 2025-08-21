@@ -20,51 +20,59 @@
         <main>
             <div class="text-center">
                 <h1>Información del Usuario</h1>
-                <a href="index.html">Volver a la página de inicio</a>
+                <a href="index.html" class="btn btn-primary">
+                    Volver al inicio
+                </a>
             </div>
-                <form id="userForm">
-                    <div class="mb-3">
-                        <label for="id">ID del Usuario:</label>
-                        <input type="text" id="id" name="id-usuario" class="form-control">
-                    </div>
-                    <button type="button" id="searchUserButton" class="btn btn-primary">Buscar</button>
-                    <br>
-                </form>
-                <fieldset disabled>
-                    <div class="mb-3">
-                        <label class="form-label" for="username">Nombre:</label>
-                        <input class="form-control" type="text" id="username" name="nombre-usuario">
-                    </div>
+            <form id="userForm">
+                <div class="mb-3">
+                    <label for="id">ID del Usuario:</label>
+                    <input type="text" id="id" name="id-usuario" class="form-control">
+                </div>
+                <button type="button" id="searchUserButton" class="btn btn-primary">Buscar</button>
+                <br>
+            </form>
+            <fieldset disabled>
+                <div class="mb-3">
+                    <label class="form-label" for="username">Nombre:</label>
+                    <input class="form-control" type="text" id="username" name="nombre-usuario">
+                </div>
 
-                    <div class="mb-3">
-                        <label class="col" for="email">Correo Electrónico:</label>
-                        <input class="form-control" type="email" id="email" name="correo-usuario">
-                    </div>
+                <div class="mb-3">
+                    <label class="col" for="email">Correo Electrónico:</label>
+                    <input class="form-control" type="email" id="email" name="correo-usuario">
+                </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="celular">Celular:</label>
-                        <input class="form-control" type="text" id="celular" name="celular-usuario">
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label" for="celular">Celular:</label>
+                    <input class="form-control" type="text" id="celular" name="celular-usuario">
+                </div>
 
-                    <select id="estado" class="form-select" aria-label="Default select example">
-                        <option selected>Consultar para verificar estado</option>
-                        <option value="0">Inactivo</option>
-                        <option value="1">Activo</option>
-                    </select>
+                <select id="estado" class="form-select" aria-label="Default select example">
+                    <option selected>Consultar para verificar estado</option>
+                    <option value="0">Inactivo</option>
+                    <option value="1">Activo</option>
+                </select>
 
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="genero" id="generoMasculino">
-                        <label class="form-check-label" for="generoMasculino">
-                            Masculino
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="genero" id="generoFemenino">
-                        <label class="form-check-label" for="generoFemenino">
-                            Femenino
-                        </label>
-                    </div>
-                </fieldset>
+                <div class="form-check">
+                    <input value="M" class="form-check-input" type="radio" name="genero" id="generoMasculino">
+                    <label class="form-check-label" for="generoMasculino">
+                        Masculino
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input value="F" class="form-check-input" type="radio" name="genero" id="generoFemenino">
+                    <label class="form-check-label" for="generoFemenino">
+                        Femenino
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input value="N" class="form-check-input" type="radio" name="genero" id="generoNoDefinido">
+                    <label class="form-check-label" for="generoNoDefinido">
+                        No Definido
+                    </label>
+                </div>
+            </fieldset>
         </main>
     </div>
 
