@@ -1,3 +1,5 @@
+import { capturarDatosSesion } from "./utils/functions.js";
+
 document.addEventListener('DOMContentLoaded', function () {
     const nombreUsuario = document.getElementById('username');
     const correoUsuario = document.getElementById('email');
@@ -60,6 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 showConfirmButton: false,
                 timer: 1500
             });
+
+            capturarDatosSesion();
 
             // Asignar los valores a los campos del formulario
             nombreUsuario.value = data.nombre || '';
