@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const data = await response.json();
 
-            console.log('Datos recibidos:', data);
+            //console.log('Datos recibidos:', data);
 
             Swal.fire({
                 title: "Datos encontrados!",

@@ -1,7 +1,7 @@
 export function capturarDatosSesion() {
     const ua = navigator.userAgent;
     const datosParseados = parseUserAgent(ua);
-    console.log(datosParseados);
+    //console.log(datosParseados);
     
     const datos = {
         fechaHora: new Date().toISOString(),
@@ -30,19 +30,27 @@ export function capturarDatosSesion() {
     } else {
         enviarDatosAlServidor(datos);
     }
-    console.log('Datos de sesión capturados:', datos);
+    //console.log('Datos de sesión capturados:', datos);
 }
 
-function enviarDatosAlServidor(datos) {
-    fetch("/api/log_sesion", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(datos)
-    })
-        .then(res => res.ok ? console.log("Log enviado") : console.error("Error al enviar log"))
-        .catch(err => console.error("Error de red:", err));
+async function enviarDatosAlServidor(datos) {
+    try {
+        const res = await fetch("http://localhost/QA-Dev/backend.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos)
+        });
+
+        console.log("Estado HTTP:", res.status);
+
+        const data = await res.json();
+        console.log("Respuesta JSON:", data);
+
+    } catch (err) {
+        console.error("Error atrapado en catch:", err);
+    }
 }
 
 function parseUserAgent(ua) {
