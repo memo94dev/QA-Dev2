@@ -2,7 +2,7 @@ export function capturarDatosSesion() {
     const ua = navigator.userAgent;
     const datosParseados = parseUserAgent(ua);
     //console.log(datosParseados);
-    
+
     const datos = {
         fechaHora: new Date().toISOString(),
         navegador: datosParseados.navegador,
@@ -14,7 +14,7 @@ export function capturarDatosSesion() {
     };
 
     // Geolocalización (requiere permiso del usuario)
-    if (navigator.geolocation) {
+    /*if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (pos) => {
                 datos.latitud = pos.coords.latitude;
@@ -29,8 +29,9 @@ export function capturarDatosSesion() {
         );
     } else {
         enviarDatosAlServidor(datos);
-    }
-    //console.log('Datos de sesión capturados:', datos);
+    }*/
+    enviarDatosAlServidor(datos);
+    console.log('Datos de sesión capturados:', datos);
 }
 
 async function enviarDatosAlServidor(datos) {
@@ -95,3 +96,87 @@ function parseUserAgent(ua) {
 
     return info;
 }
+
+
+
+// script.js
+
+const lista = document.getElementById('cliente-lista');
+const detalle = document.getElementById('cliente-detalle');
+const form = document.getElementById('cliente-form');
+const codigoInput = document.getElementById('cliente-codigo');
+
+const idInput = document.getElementById('cliente-id');
+const nombreInput = document.getElementById('cliente-nombre');
+const emailInput = document.getElementById('cliente-email');
+
+// Cargar lista de clientes
+fetch('https://desa-backend-usuario-api.onrender.com/api/Usuarios')
+    .then(res => res.json())
+    .then(clientes => {
+        clientes.forEach(cliente => {
+            const item = document.createElement('li');
+            item.className = 'list-group-item list-group-item-action';
+            item.textContent = `${cliente.nombre} (${cliente.email})`;
+            item.onclick = () => cargarCliente(cliente.idUsuario);
+            lista.appendChild(item);
+        });
+    });
+
+// Cargar datos de un cliente
+function cargarCliente(id) {
+    fetch(`https://desa-backend-usuario-api.onrender.com/api/Usuarios/${id}`)
+        .then(res => res.json())
+        .then(cliente => {
+            console.log(cliente.idUsuario);
+            idInput.value = cliente.idUsuario;
+            codigoInput.value = cliente.idUsuario;
+            nombreInput.value = cliente.nombre;
+            emailInput.value = cliente.email;
+            detalle.classList.remove('d-none');
+        });
+}
+
+// Guardar cambios
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const id = idInput.value;
+    const datos = {
+        nombre: nombreInput.value,
+        email: emailInput.value
+    };
+
+    fetch(`https://desa-backend-usuario-api.onrender.com/api/Usuarios/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos)
+    })
+        .then(res => res.json())
+        .then(actualizado => {
+            alert('Cliente actualizado correctamente');
+            location.reload(); // Recarga para ver cambios
+        });
+});
+
+// Verificar estado de la API
+document.getElementById("verifyApi").addEventListener("click", function (e) {
+    e.preventDefault();
+    fetch("https://desa-backend-usuario-api.onrender.com/")
+        .then(res => res.json())
+        .then(data => {
+            console.log("Estado de la API:", data);
+            Swal.fire({
+                icon: "info",
+                title: "Estado de la API: " + data.estado,
+                text: `Mensaje: ${data}`,
+                footer: '<p>Se ha verificado la API</p>'
+            });
+        })
+        .catch(err => console.error("Error atrapado en catch:", err));
+        Swal.fire({
+            icon: "error",
+            title: "Error de Conexión " + data.estado,
+            text: `Verificá tu conexión o intentá más tarde`,
+            footer: '<p>Verificá tu conexión o intentá más tarde</p>'
+        });
+});

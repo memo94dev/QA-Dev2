@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 icon: "warning",
                 title: "ID no ingresado",
                 text: "Por favor, ingresa un ID válido.",
-                footer: '<p>Vuelve a intentarlo</p>'
+                footer: '<p>Vuelve a intentarlo!</p>'
             });
             return;
         }
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         icon: "warning",
                         title: "Usuario no encontrado",
                         text: `No se encontró ningún usuario con el ID ${id}`,
-                        footer: '<p>Verificá que el ID esté correcto</p>'
+                        footer: '<p>Verifica que el ID esté correcto!</p>'
                     });
                 } else {
                     // Otros errores HTTP
@@ -44,10 +44,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         icon: "error",
                         title: "Error en la consulta",
                         text: `Código de error: ${response.status}`,
-                        footer: '<p>Intentalo más tarde</p>'
+                        footer: '<p>Inténtalo más tarde!</p>'
                     });
                 }
-
                 // Salimos del bloque si hubo error
                 return;
             }
@@ -57,8 +56,10 @@ document.addEventListener('DOMContentLoaded', function () {
             //console.log('Datos recibidos:', data);
 
             Swal.fire({
-                title: "Datos encontrados!",
                 icon: "success",
+                title: "Datos encontrados!",
+                text: `Se encontraron los datos para el ID ${id}`,
+                footer: '<p>Puedes verificar que los datos sean correctos!</p>',
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -74,10 +75,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const generoDesdeBackend = data.genero; 
 
             // Asignamos el valor al radio correspondiente
-            if (generoDesdeBackend === 'F') {
-                generoUsuarioM.checked = true;
-            } else if (generoDesdeBackend === 'M') {
+            if (generoDesdeBackend === 'F' || generoDesdeBackend === 'f') {
                 generoUsuarioF.checked = true;
+            } else if (generoDesdeBackend === 'M' || generoDesdeBackend === 'm') {
+                generoUsuarioM.checked = true;
             } else {
                 generoUsuarioN.checked = true;
             }
@@ -94,10 +95,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 footer: '<p>Verificá tu conexión o intentá más tarde</p>'
             });
 
-            // Limpieza de campos si querés dejarlo claro
-            nombreUsuario.value = 'null';
-            correoUsuario.value = 'null';
-            celularUsuario.value = 'null';
+            // Limpieza de campos del formulario
+            nombreUsuario.value = '';
+            correoUsuario.value = '';
+            celularUsuario.value = '';
             estadoUsuario.value = 0;
             generoUsuarioN.checked = true;
         }
