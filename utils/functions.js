@@ -111,7 +111,15 @@ const nombreInput = document.getElementById('cliente-nombre');
 const emailInput = document.getElementById('cliente-email');
 
 // Cargar lista de clientes
-fetch('https://desa-backend-usuario-api.onrender.com/api/Usuarios')
+fetch('https://desa-backend-usuario-api.onrender.com/api/Usuarios',
+    {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': 'CLAVE_API_KEY_123456'
+        }
+    }
+)
     .then(res => res.json())
     .then(clientes => {
         clientes.forEach(cliente => {
@@ -125,7 +133,13 @@ fetch('https://desa-backend-usuario-api.onrender.com/api/Usuarios')
 
 // Cargar datos de un cliente
 function cargarCliente(id) {
-    fetch(`https://desa-backend-usuario-api.onrender.com/api/Usuarios/${id}`)
+    fetch(`https://desa-backend-usuario-api.onrender.com/api/Usuarios/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': 'CLAVE_API_KEY_123456'
+        }
+    })
         .then(res => res.json())
         .then(cliente => {
             console.log(cliente.idUsuario);
@@ -148,7 +162,10 @@ form.addEventListener('submit', function (e) {
 
     fetch(`https://desa-backend-usuario-api.onrender.com/api/Usuarios/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': 'CLAVE_API_KEY_123456'
+        },
         body: JSON.stringify(datos)
     })
         .then(res => res.json())
@@ -159,15 +176,24 @@ form.addEventListener('submit', function (e) {
 });
 
 // Verificar estado de la API
+
 document.getElementById("verifyApi").addEventListener("click", function (e) {
     e.preventDefault();
-    fetch("https://desa-backend-usuario-api.onrender.com/")
-        .then(res => res.json())
+fetch("https://desa-backend-usuario-api.onrender.com/")
+        .then(res => {
+            console.log("Codigo de estado: " + res.status);
+            const codigoRespuesta = res.status;
+            if (res.status === 200) {
+                return res.json();
+            } else {
+                throw new Error("Error en la respuesta de la API");
+            }
+        })
         .then(data => {
             console.log("Estado de la API:", data);
             Swal.fire({
                 icon: "info",
-                title: "Estado de la API: " + data.estado,
+                title: "Estado de la API: " + codigoRespuesta,
                 text: `Mensaje: ${data}`,
                 footer: '<p>Se ha verificado la API</p>'
             });
@@ -175,7 +201,7 @@ document.getElementById("verifyApi").addEventListener("click", function (e) {
         .catch(err => console.error("Error atrapado en catch:", err));
         Swal.fire({
             icon: "error",
-            title: "Error de Conexión " + data.estado,
+            title: "Error de Conexión " + codigoRespuesta,
             text: `Verificá tu conexión o intentá más tarde`,
             footer: '<p>Verificá tu conexión o intentá más tarde</p>'
         });

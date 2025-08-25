@@ -27,6 +27,10 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             const response = await fetch(`https://desa-backend-usuario-api.onrender.com/api/Usuarios/${id}`, {
                 method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-Key': 'CLAVE_API_KEY_123456'
+                }
             });
 
             if (!response.ok) {
