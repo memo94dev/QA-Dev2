@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const generoUsuarioM = document.getElementById('generoMasculino');
     const generoUsuarioF = document.getElementById('generoFemenino');
     const generoUsuarioN = document.getElementById('generoNoDefinido');
+    const fechaNacimientoUsuario = document.getElementById('fechaNac');
     const estadoUsuario = document.getElementById('estado');
 
     document.getElementById('searchUserButton').addEventListener('click', async function (e) {
@@ -57,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const data = await response.json();
 
-            //console.log('Datos recibidos:', data);
+            console.log('Datos recibidos:', data);
 
             Swal.fire({
                 icon: "success",
@@ -74,7 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
             nombreUsuario.value = data.nombre || '';
             correoUsuario.value = data.email || '';
             celularUsuario.value = data.celular || '';
-            estadoUsuario.value = data.estado || '';
+            fechaNacimientoUsuario.value = formatearFecha(data.fechaNacimiento) || '';
+            //estadoUsuario.value = data.estado || '';
 
             const generoDesdeBackend = data.genero; 
 
@@ -108,3 +110,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// Funcion para formatear la fecha de la BDD
+function formatearFecha(fechaISO) {
+  // Crea un objeto Date a partir del string ISO
+  const fecha = new Date(fechaISO);
+
+  // Extrae los componentes de la fecha
+  const año = fecha.getFullYear();
+  const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+  const dia = String(fecha.getDate()).padStart(2, '0');
+
+  // Devuelve el formato compatible con input type="date"
+  return `${año}-${mes}-${dia}`;
+}
+
+// Ejemplo de uso
+/*const fechaConvertida = formatearFecha("2025-09-02T09:41:57.291Z");
+document.getElementById("miInputFecha").value = fechaConvertida;*/
